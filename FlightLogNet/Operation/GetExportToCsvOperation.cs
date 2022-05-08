@@ -25,29 +25,40 @@
             // var reports = this.flightRepository.GetReport();
 
             csv.AppendLine(
-                "FlightId;TakeoffTime;LandingTime;Immatriculation;Type;Pilot;Copilot;Task;TowplaneID;GliderID");
+                "ID Letu;Čas vzletu;Typ letadla; Imatrikulace Letadla;Příjmení Pilota;Jméno Pilota;Adresa pilota - ulice;Adresa pilota - město;Adresa pilota - PSČ;Adresa pilota - země;Type;Příjmení kopilota;Jméno kopilota;Čas přistání;Doba letu v minutách;Úloha;Poznámka");
 
             foreach (var report in this.flightRepository.GetReport())
             {
                 if (report.Towplane != null)
                 {
                     // Towplane
-                    csv.Append($"{report.Towplane.Id};{report.Towplane.TakeoffTime.ToString(DATE_FORMAT)};{report.Towplane.LandingTime?.ToString(DATE_FORMAT)};");
-                    csv.Append($"{report.Towplane.Airplane?.Immatriculation};{report.Towplane.Airplane?.Type};");
-                    csv.Append($"{report.Towplane.Pilot?.FirstName} {report.Towplane.Pilot?.LastName};");
-                    csv.Append($"{report.Towplane.Copilot?.FirstName} {report.Towplane.Copilot?.LastName};");
-                    csv.Append($"{report.Towplane.Task};{report.Towplane?.Id};{report.Glider?.Id}");
+                    csv.Append($"{report.Towplane.Id};");
+                    csv.Append($"{report.Towplane.TakeoffTime.ToString(DATE_FORMAT)};");
+                    csv.Append($"{report.Towplane.Airplane?.Type};");
+                    csv.Append($"{report.Towplane.Airplane?.Immatriculation}");
+                    csv.Append($"{report.Towplane.Pilot?.LastName};{report.Towplane.Pilot?.FirstName};");
+                    csv.Append($"{report.Towplane.Pilot?.Address.Street};{report.Towplane.Pilot?.Address.City};{report.Towplane.Pilot?.Address.PostalCode};{report.Towplane.Pilot?.Address.Country};");
+                    csv.Append($"{report.Towplane.Copilot?.LastName} {report.Towplane.Copilot?.FirstName};");
+                    csv.Append($"{report.Towplane.LandingTime?.ToString(DATE_FORMAT)};");
+                    csv.Append($"{report.Towplane.LandingTime - report.Towplane.TakeoffTime};");
+                    csv.Append($"{report.Towplane.Task};");
                     csv.AppendLine();
+                    
                 }
 
                 if (report.Glider != null)
                 {
                     // Glider
-                    csv.Append($"{report.Glider.Id};{report.Glider.TakeoffTime.ToString(DATE_FORMAT)};{report.Glider.LandingTime?.ToString(DATE_FORMAT)};");
-                    csv.Append($"{report.Glider.Airplane?.Immatriculation};{report.Glider.Airplane?.Type};");
-                    csv.Append($"{report.Glider.Pilot?.FirstName} {report.Glider.Pilot?.LastName};");
-                    csv.Append($"{report.Glider.Copilot?.FirstName} {report.Glider.Copilot?.LastName};");
-                    csv.Append($"{report.Glider.Task};{report.Towplane?.Id};{report.Glider?.Id}");
+                    csv.Append($"{report.Glider.Id};");
+                    csv.Append($"{report.Glider.TakeoffTime.ToString(DATE_FORMAT)};");
+                    csv.Append($"{report.Glider.Airplane?.Type};");
+                    csv.Append($"{report.Glider.Airplane?.Immatriculation}");
+                    csv.Append($"{report.Glider.Pilot?.LastName};{report.Glider.Pilot?.FirstName};");
+                    csv.Append($"{report.Glider.Pilot?.Address.Street};{report.Glider.Pilot?.Address.City};{report.Glider.Pilot?.Address.PostalCode};{report.Glider.Pilot?.Address.Country};");
+                    csv.Append($"{report.Glider.Copilot?.LastName} {report.Glider.Copilot?.FirstName};");
+                    csv.Append($"{report.Glider.LandingTime?.ToString(DATE_FORMAT)};");
+                    csv.Append($"{report.Glider.LandingTime - report.Glider.TakeoffTime};");
+                    csv.Append($"{report.Glider.Task};");
                     csv.AppendLine();
                 }
             }
