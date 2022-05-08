@@ -1,7 +1,7 @@
 namespace FlightLogNet.Tests.Operation
 {
     using System;
-    using System.Text;
+    using System.IO;
     using System.Linq;
 
     using FlightLogNet.Operation;
@@ -33,8 +33,8 @@ namespace FlightLogNet.Tests.Operation
             // Act
             var result = getExportToCsvOperation.Execute();
 
-            byte[] expectedCsv = ExpectedResult.export;
-            expectedCsv = expectedCsv.Skip(3).ToArray();
+            var res = System.Text.Encoding.UTF8.GetString(result);
+            byte[] expectedCsv = File.ReadAllBytes("../../../export.csv");
 
             // Assert
             Assert.Equal(expectedCsv, result);
